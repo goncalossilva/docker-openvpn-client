@@ -11,7 +11,7 @@ docker run -d \
   --name=openvpn-client \
   --cap-add=NET_ADMIN \
   --device=/dev/net/tun \
-  -v <path/to/config>:/data/vpn
+  -v <path/to/config>:/data
   yacht7/openvpn-client
 ```
 
@@ -29,7 +29,7 @@ services:
         devices:
             - /dev/net/tun
         volumes:
-            - <path/to/config>:/data/vpn
+            - <path/to/config>:/data
         restart: unless-stopped
 ```
 

@@ -1,16 +1,16 @@
 FROM alpine:3.10
-
-LABEL maintainer="yacht7"
+LABEL maintainer="Gonçalo Silva <goncalossilva@gmail.com>"
 
 RUN \
     apk add --no-cache \
         openvpn \
         tinyproxy && \
-    mkdir -p /data/vpn /var/log/openvpn
-COPY data/ /data
-RUN chmod 500 /data/entry.sh && \
-    mv /data/tinyproxy.conf /etc/tinyproxy/tinyproxy.conf
+    mkdir -p /data/ /var/log/openvpn
 
-HEALTHCHECK CMD ping -qc 3 1.1.1.1
+ADD openvpn/ /etc/openvpn/
+ADD tinyproxy /etc/tinyproxy/
+ADD scripts /etc/scripts/
 
-ENTRYPOINT ["/data/entry.sh"]
+HEALTHCHECK CMD /etc/scripts/healthcheck.sh
+
+ENTRYPOINT ["/etc/openvpn/start.sh"]
